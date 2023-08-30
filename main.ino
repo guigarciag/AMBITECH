@@ -1,15 +1,14 @@
 #include <Wire.h> //INCLUSÃO DA BIBLIOTECA
 #include "RTClib.h" //INCLUSÃO DA BIBLIOTECA
 #include <LiquidCrystal.h> //INCLUSÃO DA BIBLIOTECA
-#include <DHT.h> //INCLUSÃO DA BIBLIOTECA
+#include "dht.h" //INCLUSÃO DA BIBLIOTECA
 #include <EEPROM.h>
 
-#define DHTPIN A1
-#define DHTTYPE DHT11
+const int pinoDHT11 = A1;
 
 
 RTC_DS3231 rtc; //OBJETO DO TIPO RTC_DS3231
-DHT dht(DHTPIN, DHTTYPE);
+dht DHT;
 
 
 LiquidCrystal lcd(12, 11, 10, 5, 4, 3, 2); 
@@ -21,7 +20,8 @@ int temperaturaTotal = 0;
 int luminosidadeMedia = 0;
 int umidadeMedia = 0;
 int temperaturaMedia = 0;
-int enderecoBase = 0;
+int enderecoBase = EEPROM.read(0);
+DateTime now;
 
 void setup() {
   byte outputPin[] = {};
@@ -38,24 +38,43 @@ void setup() {
     //rtc.adjust(DateTime(2018, 9, 29, 15, 00, 45)); //(ANO), (MÊS), (DIA), (HORA), (MINUTOS), (SEGUNDOS)
   }
   delay(100); //INTERVALO DE 100 MILISSEGUNDOS
+  lcd.begin(16,2);
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("CALMA AMIGAO, TA");
+  lcd.setCursor(0,1);
+  lcd.print("LENDO PO");
 }
 
 void loop() {
+  
   calculaLuminosidade(); //VALOR DA LUMINOSIDADE EM %
   calculaUmidade(); //VALOR DA UMIDADE
   calculaTemperatura();
   delay(10000);
   contador++;
-  if(contador == 6){
+  if(contador == 2
+  ){
+    DHT.read11(pinoDHT11); //LÊ AS INFORMAÇÕES DO SENSOR
+    lcd.clear();
+    now = rtc.now();
     luminosidadeMedia = calcularMedia(luminosidadeTotal);
     umidadeMedia = calcularMedia(umidadeTotal);
     temperaturaMedia = calcularMedia(temperaturaTotal);
-    if(!conferir(luminosidadeMedia, umidadeMedia, temperaturaMedia)){
-      alerta();
+    luminosidadeTotal = 0;
+    umidadeTotal = 0;
+    temperaturaTotal = 0;
+    lcd.setCursor(0,0);
+    lcd.print(String(now.day()) + "/" + String(now.month()) + "/" + String(now.year()));
+    lcd.setCursor(0,1);
+    lcd.print("L:" + String(luminosidadeMedia) + "%" + " U:" + String(umidadeMedia) + "% " + "T:" + String(temperaturaMedia)) + "°C";
+    conferir(luminosidadeMedia, umidadeMedia, temperaturaMedia);
+    Serial.println("L:" + String(luminosidadeMedia));
+    Serial.println(" U:" + String(umidadeMedia));
+    Serial.println(" T:" + String(temperaturaMedia));
     }
   }
-  Serial.println(luminosidadeTotal); //PRINTAR NO PROMPT
-}
+  
 
 void calculaLuminosidade(){
   int sensorValue = analogRead(A0); //LÊ O SINAL ANALÓGICO
@@ -64,12 +83,12 @@ void calculaLuminosidade(){
 }
 
 void calculaUmidade(){
-  float humidity = dht.readHumidity();
+  float humidity = DHT.humidity;
   umidadeTotal  = umidadeTotal + humidity;
 }
 
 void calculaTemperatura(){
-  float temperature = dht.readTemperature();
+  float temperature = DHT.temperature;
   temperaturaTotal = temperaturaTotal + temperature;
 }
 
@@ -77,39 +96,53 @@ int calcularMedia(int valor){
   return valor/6;
 }
 
-bool conferir(int luminosidade, int umidade, int temperatura){
+void conferir(int luminosidade, int umidade, int temperatura){
   contador = 0;
   luminosidadeTotal = 0;
   temperaturaTotal = 0;
   umidadeTotal = 0;
-  if((0< luminosidade< 30) & (30< umidade< 50) & (15< temperatura< 25)){
-    return true;
+  String caracteres;
+  if(0< luminosidade< 30){
+    caracteres = "L" + luminosidade;
   }
-  else{
-    return false;
+  if(30< umidade< 50){
+    caracteres += "U" + umidade;
+  }
+  if(15< temperatura< 25){
+    caracteres += "T" + temperatura;
+  }
+  if(caracteres.length() > 0){
+    alerta(caracteres);
   }
 }
 
-void alerta(){
-  DateTime now = rtc.now();
-  String mensagem = now.day() + now.month() + now.year();
-  guardaEeprom(enderecoBase, mensagem);
+void alerta(String caracteres){
+  now = rtc.now();
+  String mensagem = String(now.day()) + String(now.month()) + String(now.year()) + caracteres;
+  guardaEeprom(mensagem);
   ascendeLed();
+  alertaSonoro();
 }
 
-void guardaEeprom(int enderecoBase, String mensagem){
+void guardaEeprom(String mensagem){
   if (mensagem.length()>EEPROM.length() || (enderecoBase+mensagem.length()) >EEPROM.length() ){
     Serial.println ("A sua String não cabe na EEPROM");
   }
   else{
-    for (int i = 0; i<mensagem.length(); i++){
+    for (int i = 0 + 1; i<mensagem.length(); i++){
        EEPROM.write(enderecoBase,mensagem[i]);
        enderecoBase++;
     }
     EEPROM.write(enderecoBase,'_');
+    EEPROM.write(0,enderecoBase);
   }
 }
 
 void ascendeLed(){
 
+}
+
+void alertaSonoro(){
+
+  
 }
