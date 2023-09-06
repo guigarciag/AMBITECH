@@ -11,6 +11,10 @@ dht DHT;
 
 LiquidCrystal lcd(12, 11, 10, 5, 4, 3, 2); 
 
+int redPin = 9; 
+int greenPin = 13; 
+int buzzer = 8; 
+
 int contador = 0;
 int luminosidadeTotal = 0;
 float umidadeTotal = 0;
@@ -21,19 +25,10 @@ float temperaturaMedia = 0;
 DateTime now;
 
 void setup() {
+
+    ledVerdeEBuzzerOff(); 
     pinMode(13, OUTPUT);
-  
-  /***
-    Iterate through each byte of the EEPROM storage.
-
-    Larger AVR processors have larger EEPROM sizes, E.g:
-    - Arduno Duemilanove: 512b EEPROM storage.
-    - Arduino Uno:        1kb EEPROM storage.
-    - Arduino Mega:       4kb EEPROM storage.
-
-    Rather than hard-coding the length, you should use the pre-provided length function.
-    This will make your code portable to all AVR processors.
-  ***/
+    pinMode(9,OUTPUT);
 
   for (int i = 0 ; i < EEPROM.length() ; i++) {
     EEPROM.write(i, 0);
@@ -55,10 +50,28 @@ void setup() {
   delay(100); //INTERVALO DE 100 MILISSEGUNDOS
   lcd.begin(16,2);
   lcd.clear();
-  lcd.setCursor(0,0);
-  lcd.print("CALMA AMIGAO, TA");
+  lcd.setCursor(3,0);
+  lcd.print("AMBITECH");
+  delay(3000);
+  
+  lcd.clear();
   lcd.setCursor(0,1);
-  lcd.print("LENDO PO");
+  lcd.print(" SEU AMBIENTE,NOSSA TECNOLOGIA!!!");
+
+  for(int posi_LCD = 0; posi_LCD < 18; posi_LCD ++)
+  {
+
+    
+    lcd.setCursor(16,1);
+    lcd.scrollDisplayLeft();  //Essa é a função que faz as letras se deslocarem
+
+    delay(500);         // Quanto menor o tempo, mais rápido será o deslocamento
+        if(posi_LCD == 17)
+    {
+      break;
+    }
+  }
+  
 }
 
 void loop() {
@@ -68,6 +81,7 @@ void loop() {
   calculaTemperatura();
   delay(1000);
   contador++;
+  
   if(contador == 2)//ALTERAR DEPOIS DE TESTES
   {
     lcd.clear();
@@ -84,6 +98,7 @@ void loop() {
     lcd.setCursor(0,1);
     lcd.print("L:" + String(luminosidadeMedia) + "%" + "U:" + String(umidadeMedia, 0) + "%" + "T:" + String(temperaturaMedia,0) + "C");
     conferir(luminosidadeMedia, umidadeMedia, temperaturaMedia);
+    Serial.println();
     Serial.println("L:" + String(luminosidadeMedia));
     Serial.println(" U:" + String(umidadeMedia));
     Serial.println(" T:" + String(temperaturaMedia));
@@ -117,52 +132,64 @@ void conferir(int luminosidade, float umidade, float temperatura){
   umidadeTotal = 0;
   String caracteres = "";
   if(luminosidade>30){
-      Serial.println("Conferir l");
     caracteres = caracteres + "L" + String(luminosidade);
   }
-  if(umidade<30 || umidade>50){
-      Serial.println("Conferir u");
+  if(umidade<30 || umidade>70){
     caracteres = caracteres + "U" + String(umidade, 0);
   }
   if(temperatura<15 || temperatura > 25){
-      Serial.println("Conferir t");
     caracteres = caracteres + "T" + String(temperatura, 0);
   }
   if(caracteres.length() > 0){
-    
-      Serial.println("Conferir alerta");
+    ledVermelhoEBuzzerOn(); 
     alerta(caracteres);
   }
+  else{
+    ledVerdeEBuzzerOff();  
+    
+    }
+  
 }
 
 void alerta(String caracteres){
+
   now = rtc.now();
   String mensagem = "";
-  mensagem = String(now.day()) + String(now.month()) + String(now.year()) + String(now.hour()) + String(now.minute()) + caracteres;
-  Serial.print(mensagem);
+  mensagem = String(now.day())+ "/" + String(now.month())+ "/" + String(now.year())+ " - " + String(now.hour())+ ":" + String(now.minute()) + " - " + caracteres;
+  //Serial.print(mensagem);
+  //
   Serial.println();
   guardaEeprom(mensagem);
-  ascendeLed();
-  alertaSonoro();
+  //Serial.println("alerta");
+  ; 
+  //Serial.println("alerta1");
 }
 
 void guardaEeprom(String mensagem){
-    for (int i = 0; i<mensagem.length(); i++){
+    for (int i = 0; i < mensagem.length(); i++){
        EEPROM.write(0,mensagem[i]);
-       Serial.println(mensagem[i]);
+       Serial.print(mensagem[i]);
     }
-    for (int i = 0; mensagem.length(); i++){
+    for (int i = 0; i < mensagem.length(); i++){
     
-       Serial.print(char(EEPROM.read(i)));
+      Serial.print(char(EEPROM.read(i)));
     }
 }
 
-
-void ascendeLed(){
-
-}
-
-void alertaSonoro(){
+void ledVermelhoEBuzzerOn () { 
+  digitalWrite(greenPin, LOW); 
+  digitalWrite(redPin, HIGH); 
+  tone(buzzer,1500); 
+  delay(1000); // ver questão do dellay 
+  noTone(buzzer); 
+} 
 
   
-}
+
+void ledVerdeEBuzzerOff () 
+{ 
+  noTone(buzzer); 
+  delay(500); // ver questão do dellay 
+  digitalWrite(greenPin, HIGH); 
+  digitalWrite(redPin, LOW); 
+} 
