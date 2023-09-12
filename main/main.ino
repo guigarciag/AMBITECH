@@ -29,37 +29,37 @@ int melody[] = //MELODIA INICIAL DA MÚSICA DE INTRODUÇÃO
   NOTE_A4, NOTE_C5, NOTE_B4, NOTE_B4, REST,
   NOTE_C5, NOTE_A4, NOTE_B4, REST,
   
-  NOTE_A4, NOTE_A4,
-  //Repeat of first part
-  NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, REST,
-  NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, REST,
-  NOTE_A4, NOTE_G4, NOTE_A4, REST,
+  // NOTE_A4, NOTE_A4,
+  // //Repeat of first part
+  // NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, REST,
+  // NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, REST,
+  // NOTE_A4, NOTE_G4, NOTE_A4, REST,
   
-  NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, REST,
-  NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, REST,
-  NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, REST,
-  NOTE_A4, NOTE_G4, NOTE_A4, REST,
+  // NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, REST,
+  // NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, REST,
+  // NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, REST,
+  // NOTE_A4, NOTE_G4, NOTE_A4, REST,
   
-  NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, REST,
-  NOTE_A4, NOTE_C5, NOTE_D5, NOTE_D5, REST,
-  NOTE_D5, NOTE_E5, NOTE_F5, NOTE_F5, REST,
-  NOTE_E5, NOTE_D5, NOTE_E5, NOTE_A4, REST,
+  // NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, REST,
+  // NOTE_A4, NOTE_C5, NOTE_D5, NOTE_D5, REST,
+  // NOTE_D5, NOTE_E5, NOTE_F5, NOTE_F5, REST,
+  // NOTE_E5, NOTE_D5, NOTE_E5, NOTE_A4, REST,
   
-  NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, REST,
-  NOTE_D5, NOTE_E5, NOTE_A4, REST,
-  NOTE_A4, NOTE_C5, NOTE_B4, NOTE_B4, REST,
-  NOTE_C5, NOTE_A4, NOTE_B4, REST,
-  //End of Repeat
+  // NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, REST,
+  // NOTE_D5, NOTE_E5, NOTE_A4, REST,
+  // NOTE_A4, NOTE_C5, NOTE_B4, NOTE_B4, REST,
+  // NOTE_C5, NOTE_A4, NOTE_B4, REST,
+  // //End of Repeat
   
-  NOTE_E5, REST, REST, NOTE_F5, REST, REST,
-  NOTE_E5, NOTE_E5, REST, NOTE_G5, REST, NOTE_E5, NOTE_D5, REST, REST,
-  NOTE_D5, REST, REST, NOTE_C5, REST, REST,
-  NOTE_B4, NOTE_C5, REST, NOTE_B4, REST, NOTE_A4,
+  // NOTE_E5, REST, REST, NOTE_F5, REST, REST,
+  // NOTE_E5, NOTE_E5, REST, NOTE_G5, REST, NOTE_E5, NOTE_D5, REST, REST,
+  // NOTE_D5, REST, REST, NOTE_C5, REST, REST,
+  // NOTE_B4, NOTE_C5, REST, NOTE_B4, REST, NOTE_A4,
   
-  NOTE_E5, REST, REST, NOTE_F5, REST, REST,
-  NOTE_E5, NOTE_E5, REST, NOTE_G5, REST, NOTE_E5, NOTE_D5, REST, REST,
-  NOTE_D5, REST, REST, NOTE_C5, REST, REST,
-  NOTE_B4, NOTE_C5, REST, NOTE_B4, REST, NOTE_A4
+  // NOTE_E5, REST, REST, NOTE_F5, REST, REST,
+  // NOTE_E5, NOTE_E5, REST, NOTE_G5, REST, NOTE_E5, NOTE_D5, REST, REST,
+  // NOTE_D5, REST, REST, NOTE_C5, REST, REST,
+  // NOTE_B4, NOTE_C5, REST, NOTE_B4, REST, NOTE_A4
 };
 
 int durations[] = //DURAÇÃO DAS NOTAS DA MELODIA
@@ -84,37 +84,37 @@ int durations[] = //DURAÇÃO DAS NOTAS DA MELODIA
   8, 8, 4, 8, 8,
   8, 8, 4, 4,
   
-  4, 8,
-  //Repeat of First Part
-  8, 8, 4, 8, 8,
-  8, 8, 4, 8, 8,
-  8, 8, 4, 8,
+  // 4, 8,
+  // //Repeat of First Part
+  // 8, 8, 4, 8, 8,
+  // 8, 8, 4, 8, 8,
+  // 8, 8, 4, 8,
   
-  8, 8, 4, 8, 8,
-  8, 8, 4, 8, 8,
-  8, 8, 4, 8, 8,
-  8, 8, 4, 8,
+  // 8, 8, 4, 8, 8,
+  // 8, 8, 4, 8, 8,
+  // 8, 8, 4, 8, 8,
+  // 8, 8, 4, 8,
   
-  8, 8, 4, 8, 8,
-  8, 8, 4, 8, 8,
-  8, 8, 4, 8, 8,
-  8, 8, 8, 4, 8,
+  // 8, 8, 4, 8, 8,
+  // 8, 8, 4, 8, 8,
+  // 8, 8, 4, 8, 8,
+  // 8, 8, 8, 4, 8,
   
-  8, 8, 4, 8, 8,
-  4, 8, 4, 8,
-  8, 8, 4, 8, 8,
-  8, 8, 4, 4,
-  //End of Repeat
+  // 8, 8, 4, 8, 8,
+  // 4, 8, 4, 8,
+  // 8, 8, 4, 8, 8,
+  // 8, 8, 4, 4,
+  // //End of Repeat
   
-  4, 8, 4, 4, 8, 4,
-  8, 8, 8, 8, 8, 8, 8, 8, 4,
-  4, 8, 4, 4, 8, 4,
-  8, 8, 8, 8, 8, 2,
+  // 4, 8, 4, 4, 8, 4,
+  // 8, 8, 8, 8, 8, 8, 8, 8, 4,
+  // 4, 8, 4, 4, 8, 4,
+  // 8, 8, 8, 8, 8, 2,
   
-  4, 8, 4, 4, 8, 4,
-  8, 8, 8, 8, 8, 8, 8, 8, 4,
-  4, 8, 4, 4, 8, 4,
-  8, 8, 8, 8, 8, 2
+  // 4, 8, 4, 4, 8, 4,
+  // 8, 8, 8, 8, 8, 8, 8, 8, 4,
+  // 4, 8, 4, 4, 8, 4,
+  // 8, 8, 8, 8, 8, 2
 };
 
 
@@ -141,7 +141,7 @@ int currentNote = 0; //VARIÁVEL UTILIZADA PARA TOCAR A MÚSICA, VERIFICA A NOTA
 bool isPlayingMusic = true; //VARIÁVEL UTILIZADA PARA TOCAR A MÚSIA, VERIFICA SE A MÚSICA ESTÁ TOCANDO
 
 bool functionExecuted = false; //VARIÁVEL PARA VERIFICAR SE JÁ FOI EXECUTADA UMA FUNÇÃO ESTABELECIDA, PARA EXECUTÁ-LA UMA UNICA VEZ
-previousMillis = millis(); //DEFINE O VALOR ANTERIOR
+int previousMillis = millis(); //DEFINE O VALOR ANTERIOR
 
 void setup() 
 {
@@ -174,11 +174,6 @@ void setup()
 void loop() 
 {
   unsigned long currentMillis = millis();
-  if (!functionExecuted && (currentMillis - previousMillis > 10)) //MÉTODO ASSÍNCRONO POR MEIO DO MIILIS()
-  {
-    sonzinManeiro(); //EXECUTA O MÉTODO SONZINMANEIRO() PARA CHAMAR O SOM INICIAL
-    previousMillis = currentMillis;
-  }
 
   if(!functionExecuted) //MOSTRAR NO LCD E FAZER ANIMAÇÃO DAS LETRAS SE DESLOCAREM PARA A ESQUERDA
   {
@@ -187,6 +182,15 @@ void loop()
     lcd.setCursor(3,0); //SET O PRIMEIRO CARACTER DA PRIMEIRA LINHA
     lcd.print("AMBITECH"); //ESCREVER NO LCD
     delay(3000); //PAUSA
+  }
+
+  if (!functionExecuted && (currentMillis - previousMillis > 10)) //MÉTODO ASSÍNCRONO POR MEIO DO MIILIS()
+  {
+    sonzinManeiro(); //EXECUTA O MÉTODO SONZINMANEIRO() PARA CHAMAR O SOM INICIAL
+    previousMillis = currentMillis;
+  }
+  if(!functionExecuted)
+  {
     lcd.clear(); //LIMPA A TELA
     lcd.setCursor(0,1); //SET O PRIMEIRO CARACTER DA SEGUNDA LINHA
     lcd.print(" SEU AMBIENTE,NOSSA TECNOLOGIA!!!"); //ESCREVER NO LCD
@@ -304,6 +308,10 @@ void alerta(String caracteres) //MÉTODO PARA CRIAR A MENSAGEM DE TIMESTAMP PARA
 
 void guardaEeprom(String mensagem) //MÉTODO PARA ARMAZENAR OS DADOS FORA DO CORRETO NA MEMÓRIA DA EEPROM
 {
+    for (int i = 0 ; i < EEPROM.length() ; i++) //LIMPA TODOS OS DADOS CONTIDOS NA EEPROM ANTERIORMENTE
+    { 
+    EEPROM.write(i, 0);
+    }
     for (int i = 0; i < mensagem.length(); i++) 
     {
        EEPROM.write(0,mensagem[i]); //MÉTODO PARA ESCREVER NA MEMÓRIA DA EEPROM
