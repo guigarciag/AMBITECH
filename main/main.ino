@@ -212,10 +212,10 @@ void loop()
   calculaLuminosidade(); // CALCULA VALOR DA LUMINOSIDADE EM %
   calculaUmidade(); //CALCULA O VALOR DA UMIDADE EM %
   calculaTemperatura(); //CALCULA O VALOR DA TEMPERATURA EM °C
-  delay(1000); //TEMPO ESPERADO A CADA MEDIÇÃO
+  delay(10000); //TEMPO ESPERADO A CADA MEDIÇÃO
   contador++; //INCREMENTA O VALOR DO CONTADOR
   
-  if(contador == 2)//ALTERAR DEPOIS DE TESTES
+  if(contador == 6)//ALTERAR DEPOIS DE TESTES
   {
     lcd.clear(); //LIMPA OS VALORES DA TELA
     now = rtc.now(); //PEGA O VALOR DE DATA ATUAL
@@ -231,8 +231,8 @@ void loop()
     conferir(luminosidadeMedia, umidadeMedia, temperaturaMedia); //CHAMA O MÉTODO PARA CONFERIR OS VALORES MEDIDOS
     Serial.println();
     Serial.println("L:" + String(luminosidadeMedia)); //ESCREVE NO SERIAL MONITOR O VALOR DA LUMINOSIDADE
-    Serial.println(" U:" + String(umidadeMedia)); //ESCREVE NO SERIAL MONITOR O VALOR DA UMIDADE
-    Serial.println(" T:" + String(temperaturaMedia)); //ESCREVE NO SERIAL MONITOR O VALOR DA TEMPERATURA
+    Serial.println("U:" + String(umidadeMedia)); //ESCREVE NO SERIAL MONITOR O VALOR DA UMIDADE
+    Serial.println("T:" + String(temperaturaMedia)); //ESCREVE NO SERIAL MONITOR O VALOR DA TEMPERATURA
     luminosidadeTotal = 0;
     umidadeTotal = 0;
     temperaturaTotal = 0;
@@ -276,7 +276,7 @@ void conferir(int luminosidade, float umidade, float temperatura) //MÉTODO COM 
   {
     caracteres = caracteres + "L" + String(luminosidade);
   }
-  if(umidade<30 || umidade>70)
+  if(umidade<30 || umidade>50)
   {
     caracteres = caracteres + "U" + String(umidade, 0);
   }
@@ -314,8 +314,7 @@ void guardaEeprom(String mensagem) //MÉTODO PARA ARMAZENAR OS DADOS FORA DO COR
     }
     for (int i = 0; i < mensagem.length(); i++) 
     {
-       EEPROM.write(0,mensagem[i]); //MÉTODO PARA ESCREVER NA MEMÓRIA DA EEPROM
-       //Serial.print(mensagem[i]);
+       EEPROM.write(i,mensagem[i]); //MÉTODO PARA ESCREVER NA MEMÓRIA DA EEPROM
     }
     for (int i = 0; i < mensagem.length(); i++)
     {
